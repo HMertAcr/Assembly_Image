@@ -9,6 +9,7 @@ using namespace std;
 
 extern "C" void Dilation(int n, int filter_size, short *resim_org);
 extern "C" void Erosion(int n, int filter_size, short *resim_org);
+extern "C" void fillGray(int n, int filter_size, short *resim_org);
 
 int main(void)
 {
@@ -16,6 +17,7 @@ int main(void)
     bool type;
     int efile;
     char org_resim[100], dil_resim[] = "dilated.pgm", ero_resim[] = "eroded.pgm";
+    char fill_resim[] = "filled.pgm";
     do
     {
         printf("Orijinal resmin yolunu (path) giriniz:\n-> ");
@@ -37,7 +39,8 @@ int main(void)
     printf("Yapmak istediginiz islemi giriniz...\n");
     printf("1-) Dilation\n");
     printf("2-) Erosion\n");
-    printf("3-) Cikis\n> ");
+    printf("3-) Fill Gray\n");
+    printf("4-) Cikis\n> ");
     scanf("%d", &menu);
     printf("Filtre boyutunu giriniz: ");
     scanf("%d", &filter_size);
@@ -53,6 +56,10 @@ int main(void)
         resimYaz(ero_resim, resimdizi_org, N, M, Q);
         break;
     case 3:
+        fillGray(N * M, filter_size, resimdizi_org);
+        resimYaz(fill_resim, resimdizi_org, N, M, Q);
+        break;
+    case 4:
         system("EXIT");
         break;
     default:
@@ -128,4 +135,24 @@ int main(void)
 //     free(temp);
 
 //     printf("\nErosion islemi sonucunda resim \"erosion.pgm\" ismiyle olusturuldu...\n");
+// }
+
+// void fillGray(int n, int filter_size, short *resim_org)
+// {
+//     int i, j;
+//     short *temp = (short *)malloc(n * sizeof(short));
+//     memcpy(temp, resim_org, n * sizeof(short));
+
+//     int side = sqrt(n);
+
+//     for (i = 0; i < side; i++)
+//     {
+//         for (j = 0; j < side; j++)
+//         {
+//             temp[i * side + j] = 1;
+//         }
+//     }
+
+//     memcpy(resim_org, temp, n * sizeof(short));
+//     free(temp);
 // }

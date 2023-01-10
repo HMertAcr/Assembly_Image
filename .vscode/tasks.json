@@ -29,6 +29,20 @@
             },
         },
         {
+            "type": "shell",
+            "label": "Assemble fillGray.asm",
+            "command": "as",
+            "args": [
+                "-o",
+                "fillGray.o",
+                "fillGray.asm",
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+        },
+        {
             "type": "cppbuild",
             "label": "C/C++: g++.exe build active file",
             "command": "C:\\msys64\\mingw64\\bin\\g++.exe",
@@ -38,12 +52,14 @@
                 "${file}",
                 "Dilation.o",
                 "Erosion.o",
+                "fillGray.o",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe"
             ],
             "dependsOn": [
                 "Assemble Dilation.asm",
-                "Assemble Erosion.asm"
+                "Assemble Erosion.asm",
+                "Assemble fillGray.asm"
             ],
             "options": {
                 "cwd": "${fileDirname}"
